@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name = "products")
@@ -20,5 +21,6 @@ public class Product {
     @ManyToOne()
     @JoinColumn(name = "basket_id")
     @JsonIgnore
+    @ToString.Exclude
     private Basket basket;
 }

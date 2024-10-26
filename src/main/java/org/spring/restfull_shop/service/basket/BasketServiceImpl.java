@@ -2,6 +2,7 @@ package org.spring.restfull_shop.service.basket;
 
 import lombok.RequiredArgsConstructor;
 import org.spring.restfull_shop.entity.Basket;
+import org.spring.restfull_shop.entity.Product;
 import org.spring.restfull_shop.repository.BasketRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,12 @@ public class BasketServiceImpl implements BasketService {
 
     @Override
     public Basket addBasket(Basket basket) {
+        if (basket != null && basket.getProducts() != null) {
+            for (Product product : basket.getProducts()) {
+                System.out.println(product);
+                product.setBasket(basket);
+            }
+        }
         return basketRepository.save(basket);
     }
 
