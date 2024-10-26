@@ -2,13 +2,13 @@ package org.spring.restfull_shop.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.spring.restfull_shop.entity.Basket;
-import org.spring.restfull_shop.entity.User;
+
 import org.spring.restfull_shop.service.basket.BasketService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @RequiredArgsConstructor
