@@ -19,11 +19,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product addProduct(Product product, long basketId) {
-        System.out.println(basketId);
         Basket basket = basketService.findBasketById(basketId);
         basket.getProducts().add(product);
         product.setBasket(basket);
-        basketService.updateBasket(basketId, basket);
+
         return productRepository.save(product);
     }
 
