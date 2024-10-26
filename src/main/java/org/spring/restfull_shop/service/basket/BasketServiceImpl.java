@@ -18,7 +18,6 @@ public class BasketServiceImpl implements BasketService {
     public Basket addBasket(Basket basket) {
         if (basket != null && basket.getProducts() != null) {
             for (Product product : basket.getProducts()) {
-                System.out.println(product);
                 product.setBasket(basket);
             }
         }
