@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class BasketServiceImpl implements BasketService {
-    BasketRepository basketRepository;
+    private final BasketRepository basketRepository;
 
     @Override
     public Basket addBasket(Basket basket) {

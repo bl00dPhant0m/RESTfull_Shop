@@ -18,7 +18,7 @@ public class User {
     private String username;
 
     @ToString.Exclude
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_basket",referencedColumnName = "id")
     private Basket basket;
 
