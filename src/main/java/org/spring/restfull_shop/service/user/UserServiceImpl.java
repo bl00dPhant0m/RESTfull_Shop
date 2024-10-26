@@ -2,6 +2,7 @@ package org.spring.restfull_shop.service.user;
 
 import lombok.RequiredArgsConstructor;
 import org.spring.restfull_shop.entity.Basket;
+import org.spring.restfull_shop.entity.Product;
 import org.spring.restfull_shop.entity.User;
 import org.spring.restfull_shop.repository.UserRepository;
 import org.spring.restfull_shop.service.basket.BasketService;
@@ -18,6 +19,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User addUser(User user) {
+        Basket basket = user.getBasket();
+
+
+        if (basket != null && basket.getProducts() != null) {
+            for (Product product : basket.getProducts()) {
+                product.setBasket(basket);
+            }
+        }
 
         return userRepository.save(user);
     }
