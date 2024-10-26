@@ -31,10 +31,11 @@ public class BasketController {
         return ResponseEntity.ok(basketService.getAllBasket());
     }
 
-    @PatchMapping("/{id}")
+    /*@PutMapping("/{id}")
     public ResponseEntity<Basket> updateBasket(@PathVariable Long id, @RequestBody Basket basket) {
         return ResponseEntity.ok(basketService.updateBasket(id,basket));
     }
+     */
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Basket> deleteBasket(@PathVariable Long id) {

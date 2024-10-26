@@ -3,14 +3,14 @@ spring:
     name: RESTfull_Shop
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
-    password: 191919
-    username: Kirill
+    password:
+    username:
     driver-class-name: org.postgresql.Driver
 
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
 
     show-sql: true
     database-platform: org.hibernate.dialect.PostgreSQLDialect

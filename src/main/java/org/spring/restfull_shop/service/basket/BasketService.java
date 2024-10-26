@@ -9,7 +9,7 @@ public interface BasketService {
     Basket addBasket(Basket basket);
     Basket findBasketById(long id);
 
-    Basket updateBasket(long id, Basket basket);
+    //Basket updateBasket(long id, Basket basket);
 
     void deleteBasket(long id);
 

@@ -4,6 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.spring.restfull_shop.entity.Basket;
 import org.spring.restfull_shop.entity.Product;
 import org.spring.restfull_shop.repository.BasketRepository;
+import org.spring.restfull_shop.repository.ProductRepository;
+import org.spring.restfull_shop.service.product.ProductService;
+import org.spring.restfull_shop.service.product.ProductServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +16,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BasketServiceImpl implements BasketService {
     private final BasketRepository basketRepository;
+
+    private final ProductRepository productRepository;
 
     @Override
     public Basket addBasket(Basket basket) {
@@ -30,14 +35,27 @@ public class BasketServiceImpl implements BasketService {
                 .orElseThrow(() -> new RuntimeException("Basket with id"  + id +" not found"));
     }
 
-    @Override
+    /*@Override
     public Basket updateBasket(long id, Basket updatedBasket) {
-        return basketRepository.findById(id)
-                .map(basket -> {
-                    basket.setProducts(updatedBasket.getProducts());
-                    return basketRepository.save(basket);
-                }).orElseThrow(() -> new RuntimeException("Basket with id " + id + " not found"));
+        Basket basket = findBasketById(id);
+
+        List<Product> oldProducts = basket.getProducts();
+
+        for (Product oldProduct : oldProducts) {
+            productRepository.delete(oldProduct);
+        }
+        basket.getProducts().clear();
+
+        List<Product> newProducts = updatedBasket.getProducts();
+        for (Product newProduct : newProducts) {
+            newProduct.setBasket(basket);
+            productRepository.save(newProduct);
+            basket.getProducts().add(newProduct);
+        }
+
+        return basketRepository.save(basket);
     }
+     */
 
     @Override
     public void deleteBasket(long id) {
