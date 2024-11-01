@@ -7,7 +7,6 @@ import lombok.ToString;
 
 @Entity
 @Table(name = "users")
-@NoArgsConstructor
 @Data
 public class User {
     @Id
@@ -18,8 +17,12 @@ public class User {
     private String username;
 
     @ToString.Exclude
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "id_basket",referencedColumnName = "id")
     private Basket basket;
+
+    public User() {
+        basket = new Basket();
+    }
 
 }

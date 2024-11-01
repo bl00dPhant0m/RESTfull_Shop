@@ -21,4 +21,6 @@ public class Basket {
     @ToString.Exclude
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "basket")
     private List<Product> products;
+
+
 }

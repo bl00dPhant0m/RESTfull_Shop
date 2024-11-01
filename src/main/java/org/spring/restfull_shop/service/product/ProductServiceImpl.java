@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.spring.restfull_shop.entity.Basket;
 import org.spring.restfull_shop.entity.Product;
 import org.spring.restfull_shop.repository.ProductRepository;
-import org.spring.restfull_shop.service.basket.BasketService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,15 +13,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
     final private ProductRepository productRepository;
-    final private BasketService basketService;
 
 
     @Override
-    public Product addProduct(Product product, long basketId) {
-        Basket basket = basketService.findBasketById(basketId);
-        basket.getProducts().add(product);
-        product.setBasket(basket);
-
+    public Product addProduct(Product product) {
         return productRepository.save(product);
     }
 

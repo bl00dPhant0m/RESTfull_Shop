@@ -3,8 +3,8 @@ spring:
     name: RESTfull_Shop
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
-    password:
-    username:
+    password: 191919
+    username: Kirill
     driver-class-name: org.postgresql.Driver
 
 

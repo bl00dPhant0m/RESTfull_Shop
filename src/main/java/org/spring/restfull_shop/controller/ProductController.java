@@ -38,9 +38,9 @@ public class ProductController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/addToBasket/{id}")
-    public ResponseEntity<Product> addProduct(@RequestBody Product product, @PathVariable Long id) {
-        return ResponseEntity.ok(productService.addProduct(product, id));
+    @PostMapping("/add")
+    public ResponseEntity<Product> addProduct(@RequestBody Product product) {
+        return ResponseEntity.ok(productService.addProduct(product));
     }
 
     @PutMapping("/{id}")

@@ -4,9 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.spring.restfull_shop.entity.Basket;
 import org.spring.restfull_shop.entity.Product;
 import org.spring.restfull_shop.repository.BasketRepository;
-import org.spring.restfull_shop.repository.ProductRepository;
 import org.spring.restfull_shop.service.product.ProductService;
-import org.spring.restfull_shop.service.product.ProductServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,8 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BasketServiceImpl implements BasketService {
     private final BasketRepository basketRepository;
-
-    private final ProductRepository productRepository;
+    private final ProductService productService;
 
     @Override
     public Basket addBasket(Basket basket) {
@@ -30,41 +27,56 @@ public class BasketServiceImpl implements BasketService {
     }
 
     @Override
+    public Basket addProduct(long basketId, Product product) {
+        Basket basket = findBasketById(basketId);
+        product.setBasket(basket);
+        basket.getProducts().add(product);
+
+        productService.addProduct(product);
+        return basketRepository.save(basket);
+    }
+
+    @Override
+    public Basket deleteProduct(long basketId, long productId) {
+        Basket basket = findBasketById(basketId);
+        Product product = productService.findProductById(productId)
+                .orElseThrow(()-> new RuntimeException("Product with id " + productId + " not found"));
+
+        if (!basket.getProducts().contains(product)) {
+            throw new IllegalStateException("Продукт не принадлежит этой корзине");
+        }
+
+        product.setBasket(null);
+        basket.getProducts().remove(product);
+
+        productService.deleteProduct(productId);
+        return basketRepository.save(basket);
+
+    }
+
+    @Override
     public Basket findBasketById(long id) {
         return basketRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Basket with id"  + id +" not found"));
     }
 
-    /*@Override
-    public Basket updateBasket(long id, Basket updatedBasket) {
-        Basket basket = findBasketById(id);
-
-        List<Product> oldProducts = basket.getProducts();
-
-        for (Product oldProduct : oldProducts) {
-            productRepository.delete(oldProduct);
-        }
-        basket.getProducts().clear();
-
-        List<Product> newProducts = updatedBasket.getProducts();
-        for (Product newProduct : newProducts) {
-            newProduct.setBasket(basket);
-            productRepository.save(newProduct);
-            basket.getProducts().add(newProduct);
-        }
-
-        return basketRepository.save(basket);
-    }
-     */
-
-    @Override
-    public void deleteBasket(long id) {
-        Basket basket = findBasketById(id);
-        basketRepository.delete(basket);
-    }
 
     @Override
     public List<Basket> getAllBasket() {
         return basketRepository.findAll();
+    }
+
+    @Override
+    public Basket cleanBasket(long id) {
+        Basket basket = findBasketById(id);
+        List<Product> products = basket.getProducts();
+        basket.setProducts(null);
+
+        for (Product product : products) {
+            product.setBasket(null);
+            productService.deleteProduct(product.getId());
+        }
+
+        return basketRepository.save(basket);
     }
 }
